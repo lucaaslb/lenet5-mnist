@@ -56,7 +56,7 @@ print("[INFO] treinando a CNN...")
 H = model.fit(trainX, trainY, batch_size=128, epochs=20, verbose=2,
           validation_data=(testX, testY))
 
-model.save('temp/trained_model.h5')
+model.save('models/trained_model.h5')
 
 # avaliar a CNN
 print("[INFO] avaliando a CNN...")
