@@ -17,7 +17,7 @@ from keras.layers.core import Activation
  
 class LeNet5(object):
     """
-    Arquitetura LeNet5 com pequenas alterações.
+    Arquitetura LeNet5
  
     Com foco no reconhecimento de dígitos (MNIST), esta CNN é composta
     por uma sequência contendo os seguintes layers:
