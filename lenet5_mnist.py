@@ -1,10 +1,12 @@
 """
+author: Lucas Lacerda @lucaaslb
+
 Treina uma CNN com o dataset MNIST.
  
 A CNN é inspirada na arquitetura LeNet-5
 """ 
 # importar pacotes necessários
-from keras.utils import to_categorical
+from keras.utils import to_categorical, plot_model 
 from keras.optimizers import SGD
 from keras import backend
 from keras.datasets import mnist
@@ -18,7 +20,7 @@ from cnn import LeNet5     #classe criada na pasta cnn
 # importar e normalizar o dataset MNIST
 # input image dimensions
 imgX, imgY = 28, 28
-EPOCHS = 20
+EPOCHS = 20 
 
 print('[INFO] Download dataset: MNIST')
 
@@ -57,7 +59,7 @@ model.compile(optimizer=SGD(0.01), loss="categorical_crossentropy",
  
 # treinar a CNN
 print("[INFO] treinando a CNN...")
-H = model.fit(trainX, trainY, batch_size=128, epochs=EPOCHS, verbose=1,
+H = model.fit(trainX, trainY, batch_size=128, epochs=EPOCHS, verbose=2,
           validation_data=(testX, testY))
 
 print("[INFO] Salvando modelo treinado ...")
@@ -69,12 +71,14 @@ print("[INFO] tempo de execução da CNN: %.2f s" %(end - begin))
 
 # avaliar a CNN
 print("[INFO] avaliando a CNN...")
-predictions = model.predict(testX, batch_size=64)
+predictions = model.predict(testX, batch_size=64, verbose=2)
 print(classification_report(testY.argmax(axis=1), predictions.argmax(axis=1),
                             target_names=[str(label) for label in range(10)]))
+print('[INFO] Summary: ')
+model.summary()
+
 score = model.evaluate(testX, testY, verbose=1)
-print('[INFO] Test Loss: ', score[0])
-print('[INFO] Test Accuracy: ', score[1])
+print('[INFO] Accuracy: %.2f%%' % (score[1]*100), '| Loss: %.5f' % (score[0]))
 
 print("[INFO] Plot loss e accuracy para os datasets 'train' e 'test'")
 # plotar loss e accuracy para os datasets 'train' e 'test'
@@ -89,3 +93,7 @@ plt.xlabel("Epoch #")
 plt.ylabel("Loss/Accuracy")
 plt.legend()
 plt.savefig('models/cnn_mnist.png', bbox_inches='tight')
+
+print('[INFO] Gerando imagem do modelo de camadas da CNN')
+plot_model(model, to_file='models/model.png')
+print('\n[INFO] Finalizando ... ')

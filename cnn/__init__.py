@@ -1,10 +1,15 @@
 """
+author: Lucas Lacerda @lucaaslb
+
 Contém as implementações de arquiteturas CNN.
  
-[LeNet5] - CNN inspirada na arquitetura de LeCun [1], com algumas
-alterações nas funções de ativação, padding e pooling.
+[LeNet5] - CNN inspirada na arquitetura de LeCun
 
-[1] http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf
+Referencias: 
+
+[1] http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf # Modelo original da LeNet5
+[2] https://keras.io/layers/convolutional/              # Documentação do Keras
+[3] https://keras.io/visualization/  
 """
  
 # importar os pacotes necessários
@@ -36,11 +41,11 @@ class LeNet5(object):
         :return: Cnn do tipo LeNet5.
         
         """
-        inputShape = (height, width, channels)
+        inputShape = (height, width, channels) #formato da imagem
  
         model = Sequential()
-        model.add(Conv2D(6, kernel_size=(5, 5), padding="same",
-                         input_shape=inputShape))
+        model.add(Conv2D(filters = 6, kernel_size = (5, 5), padding = "same",
+                         input_shape = inputShape)) #Camada de convolucao: Com 6 filtros e Kernel 5x5,  padding = "same" resulta em preenchimento da entrada de forma que a saída tenha o mesmo comprimento que a entrada original. 
         model.add(Activation("relu"))
         model.add(MaxPooling2D((2,2)))
         model.add(Conv2D(16, (5, 5)))
